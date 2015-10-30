@@ -1,0 +1,3 @@
+[submodule "chapters/06/mpc"]
+	path = chapters/06/mpc
+	url = https://github.com/orangeduck/mpc
