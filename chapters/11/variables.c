@@ -434,9 +434,9 @@ lisp_value* builtin_join(lisp_environment* environment, lisp_value* a) {
         }
     }
     lisp_value* x = lisp_value_pop(a, 0);
-    while (a->count > 1) {
+    while (a->count > 0) {
         lisp_value* y = lisp_value_pop(a, 0);
-        while (y->count > 1) {
+        while (y->count > 0) {
             x = lisp_value_add(x, lisp_value_pop(y, 0));
         }
         lisp_value_delete(y);
