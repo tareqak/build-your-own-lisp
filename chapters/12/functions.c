@@ -654,7 +654,7 @@ lisp_value* builtin_var(lisp_environment* const environment,
         lisp_value* error = lisp_value_error(
             "Function '%s' expects a Q-Expression for its first argument. "
             "Got '%s'.",
-            lisp_type_name(arguments->cell[0]->type));
+            function, lisp_type_name(arguments->cell[0]->type));
         lisp_value_delete(arguments);
         return error;
     }
