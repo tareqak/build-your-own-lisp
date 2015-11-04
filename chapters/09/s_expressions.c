@@ -277,7 +277,7 @@ int main() {
     mpc_parser_t* Symbol = mpc_new("symbol");
     mpc_parser_t* Sexpression = mpc_new("sexpression");
     mpc_parser_t* Expression = mpc_new("expression");
-    mpc_parser_t* Tlisp = mpc_new("tlisp");
+    mpc_parser_t* Lispy = mpc_new("lispy");
 
     mpca_lang(MPCA_LANG_DEFAULT,
               "\
@@ -285,17 +285,17 @@ int main() {
             symbol: '+' | '-' | '*' | '/' | '%';\
             sexpression: '(' <expression>* ')';\
             expression: <number> | <symbol> | <sexpression> ;\
-            tlisp: /^/ <expression>* /$/;\
+            lispy: /^/ <expression>* /$/;\
             ",
-              Number, Symbol, Sexpression, Expression, Tlisp);
+              Number, Symbol, Sexpression, Expression, Lispy);
 
-    puts("Tareq Lisp Version 00.00.05");
+    puts("Lispy Version 00.00.05");
     puts("Press Ctrl+c to Exit\n");
     for (;;) {
-        char* input = readline("tlisp> ");
+        char* input = readline("lispy> ");
         add_history(input);
         mpc_result_t r;
-        if (mpc_parse("<stdin>", input, Tlisp, &r)) {
+        if (mpc_parse("<stdin>", input, Lispy, &r)) {
             lisp_value* x = lisp_value_evaluate(lisp_value_read(r.output));
             lisp_value_println(x);
             lisp_value_delete(x);
@@ -307,6 +307,6 @@ int main() {
         free(input);
     }
 
-    mpc_cleanup(5, Number, Symbol, Sexpression, Expression, Tlisp);
+    mpc_cleanup(5, Number, Symbol, Sexpression, Expression, Lispy);
     return 0;
 }

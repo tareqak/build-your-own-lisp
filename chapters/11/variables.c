@@ -632,7 +632,7 @@ int main() {
     mpc_parser_t* Qexpression = mpc_new("qexpression");
     mpc_parser_t* Sexpression = mpc_new("sexpression");
     mpc_parser_t* Expression = mpc_new("expression");
-    mpc_parser_t* Tlisp = mpc_new("tlisp");
+    mpc_parser_t* Lispy = mpc_new("lispy");
 
     mpca_lang(MPCA_LANG_DEFAULT,
               "\
@@ -641,19 +641,19 @@ int main() {
             qexpression: '{' <expression>* '}';\
             sexpression: '(' <expression>* ')';\
             expression: <number> | <symbol> | <sexpression> | <qexpression> ;\
-            tlisp: /^/ <expression>* /$/;\
+            lispy: /^/ <expression>* /$/;\
             ",
-              Number, Symbol, Qexpression, Sexpression, Expression, Tlisp);
+              Number, Symbol, Qexpression, Sexpression, Expression, Lispy);
 
     lisp_environment* environment = lisp_environment_new();
     lisp_environment_add_builtins(environment);
-    puts("Tareq Lisp Version 00.00.07");
+    puts("Lispy Version 00.00.07");
     puts("Press Ctrl+c to Exit\n");
     for (;;) {
-        char* input = readline("tlisp> ");
+        char* input = readline("lispy> ");
         add_history(input);
         mpc_result_t r;
-        if (mpc_parse("<stdin>", input, Tlisp, &r)) {
+        if (mpc_parse("<stdin>", input, Lispy, &r)) {
             lisp_value* x =
                 lisp_value_evaluate(environment, lisp_value_read(r.output));
             lisp_value_println(x);
@@ -667,6 +667,6 @@ int main() {
     }
     lisp_environment_delete(environment);
 
-    mpc_cleanup(6, Number, Symbol, Qexpression, Sexpression, Expression, Tlisp);
+    mpc_cleanup(6, Number, Symbol, Qexpression, Sexpression, Expression, Lispy);
     return 0;
 }
